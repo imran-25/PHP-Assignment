@@ -1,0 +1,190 @@
+**Task 0: Valid Parentheses:
+
+<?php
+
+function isValid(string $s): bool {
+    $stack = [];
+    $parenthesesMap = [
+        ')' => '(',
+        '}' => '{',
+        ']' => '['
+    ];
+
+    // Iterate over each character in the input string
+    foreach (str_split($s) as $char) {
+        // If the character is a closing parenthesis
+        if (array_key_exists($char, $parenthesesMap)) {
+            // Pop the top element from the stack
+            $topElement = array_pop($stack);
+            // If the stack is empty or the top element doesn't match the corresponding opening parenthesis
+            if ($topElement !== $parenthesesMap[$char]) {
+                return false;
+            }
+        } else {
+            // If the character is an opening parenthesis, push it onto the stack
+            array_push($stack, $char);
+        }
+    }
+
+    // If the stack is empty, all parentheses are matched
+    return empty($stack);
+}
+
+// Test cases
+echo isValid("()[]{}") ? "true\n" : "false\n"; // Output: true
+echo isValid("([)]") ? "true\n" : "false\n";   // Output: false
+
+
+**Task 1: Class Inheritance**
+
+<?php
+
+// Define a base class Shape
+abstract class Shape {
+    // Abstract method for calculating area
+    abstract public function calculateArea(): float;
+}
+
+// Circle class inherits from Shape
+class Circle extends Shape {
+    private $radius;
+
+    // Constructor to initialize radius
+    public function __construct(float $radius) {
+        $this->radius = $radius;
+    }
+
+    // Method to calculate area of circle
+    public function calculateArea(): float {
+        return pi() * $this->radius * $this->radius;
+    }
+}
+
+// Rectangle class inherits from Shape
+class Rectangle extends Shape {
+    private $length;
+    private $width;
+
+    // Constructor to initialize length and width
+    public function __construct(float $length, float $width) {
+        $this->length = $length;
+        $this->width = $width;
+    }
+
+    // Method to calculate area of rectangle
+    public function calculateArea(): float {
+        return $this->length * $this->width;
+    }
+}
+
+// Test the classes
+$circle = new Circle(5);
+echo "Area of Circle with radius 5: " . $circle->calculateArea() . "\n";
+
+$rectangle = new Rectangle(4, 6);
+echo "Area of Rectangle with length 4 and width 6: " . $rectangle->calculateArea() . "\n";
+?>
+
+
+**Task 3: Encapsulation**
+
+<?php
+
+class Employee {
+    private $name;
+    private $salary;
+
+    // Constructor to initialize employee name and salary
+    public function __construct(string $name, float $salary) {
+        $this->name = $name;
+        $this->setSalary($salary); // Ensuring salary is set securely
+    }
+
+    // Method to set salary securely
+    public function setSalary(float $salary): void {
+        // Validate salary (ensure it's non-negative)
+        if ($salary >= 0) {
+            $this->salary = $salary;
+        } else {
+            // Throw an exception for invalid salary
+            throw new InvalidArgumentException("Salary cannot be negative");
+        }
+    }
+
+    // Method to get employee name
+    public function getName(): string {
+        return $this->name;
+    }
+
+    // Method to get employee salary
+    public function getSalary(): float {
+        return $this->salary;
+    }
+}
+
+// Create an instance of Employee
+$employee = new Employee("John Doe", 50000.00);
+
+// Get employee name and salary
+echo "Employee Name: " . $employee->getName() . "\n";
+echo "Employee Salary: $" . $employee->getSalary() . "\n";
+
+// Try setting an invalid negative salary
+try {
+    $employee->setSalary(-5000);
+} catch (InvalidArgumentException $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+}
+
+// Get employee name and updated salary
+echo "Employee Name: " . $employee->getName() . "\n";
+echo "Employee Salary: $" . $employee->getSalary() . "\n";
+
+?>
+
+
+**Task 4: Polymorphism**
+
+<?php
+
+// Define the base class Animal
+abstract class Animal {
+    // Abstract method for making sounds
+    abstract public function makeSound(): string;
+}
+
+// Dog class inheriting from Animal
+class Dog extends Animal {
+    // Override method for making sounds
+    public function makeSound(): string {
+        return "Woof";
+    }
+}
+
+// Cat class inheriting from Animal
+class Cat extends Animal {
+    // Override method for making sounds
+    public function makeSound(): string {
+        return "Meow";
+    }
+}
+
+// Cow class inheriting from Animal
+class Cow extends Animal {
+    // Override method for making sounds
+    public function makeSound(): string {
+        return "Moo";
+    }
+}
+
+// Test the classes
+$animals = [new Dog(), new Cat(), new Cow()];
+
+foreach ($animals as $animal) {
+    echo get_class($animal) . " says: " . $animal->makeSound() . "\n";
+}
+
+?>
+
+
+
